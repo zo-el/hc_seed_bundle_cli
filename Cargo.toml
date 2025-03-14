@@ -1,0 +1,19 @@
+[package]
+name = "hc_seed_bundle_cli"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "hc_seed_bundle_cli"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.4", features = ["derive"] }
+color-eyre = "0.6"
+thiserror = "2.0.12"
+tokio = { version = "1.0", features = ["full"] }
+base64 = "0.22.1"
+# Update when hc_seed_bundle is published
+# hc_seed_bundle = { version = "0.2.5" }
+hc_seed_bundle = { path = "./crates/hc_seed_bundle" }
+
