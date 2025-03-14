@@ -15,10 +15,17 @@ A command-line tool for managing Holochain seed bundles (`.hcsb` files). This to
 ## Usage
 
 ```bash
-Display keys from the default seed bundle (seed_bundle.hcsb in current directory)
-hc-seed-bundle display
-Display keys from a specific seed bundle file
-hc-seed-bundle display --bundle path/to/bundle.hcsb
+Usage: hc_seed_bundle_cli <COMMAND>
+
+Commands:
+  create  Create a new seed bundle
+  unlock  Display the contents of a seed bundle
+  help    Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
+
 ```
 
 ## Authentication Methods

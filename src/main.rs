@@ -5,7 +5,7 @@ mod commands;
 mod error;
 
 use commands::create::Create;
-use commands::display::Display;
+use commands::unlock::Unlock;
 use error::CliError;
 
 #[derive(Parser)]
@@ -18,9 +18,11 @@ struct Cli {
 #[derive(clap::Subcommand)]
 enum Commands {
     /// Create a new seed bundle
+    #[command(name = "create", alias = "c")]
     Create(Create),
     /// Display the contents of a seed bundle
-    Display(Display),
+    #[command(name = "unlock", alias = "u")]
+    Unlock(Unlock),
 }
 
 #[tokio::main]
@@ -31,7 +33,7 @@ async fn main() -> Result<(), CliError> {
 
     match cli.command {
         Commands::Create(cmd) => cmd.execute().await?,
-        Commands::Display(cmd) => cmd.execute().await?,
+        Commands::Unlock(cmd) => cmd.execute().await?,
     }
 
     Ok(())

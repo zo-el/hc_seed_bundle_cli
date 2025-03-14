@@ -10,13 +10,13 @@ use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 
 #[derive(Parser, Debug)]
-pub struct Display {
+pub struct Unlock {
     /// Path to the seed bundle file (defaults to seed_bundle.hcsb in current directory)
     #[arg(short, long)]
     bundle: Option<PathBuf>,
 }
 
-impl Display {
+impl Unlock {
     pub async fn execute(&self) -> Result<(), CliError> {
         // Get bundle path
         let bundle_path = match &self.bundle {
@@ -27,12 +27,10 @@ impl Display {
         // Read and decode the bundle
         let encoded = std::fs::read(&bundle_path).map_err(CliError::Io)?;
         // / = String::from_utf8(encoded).unwrap();
-        println!("encoded>>: {:?}", encoded);
         let bundle = base64::prelude::BASE64_URL_SAFE_NO_PAD
             .decode(&encoded)
             .map_err(|e| CliError::Config(e.to_string()))?;
 
-        println!("bundle: {:?}", bundle);
         // Load the bundle
         let bundle = UnlockedSeedBundle::from_locked(&bundle)
             .await
@@ -67,7 +65,7 @@ impl Display {
                         question_list.1.clone(),
                         question_list.2.clone(),
                     ];
-                    // display the question
+                    // Unlock the question
                     println!("Question {}: {}", 1, question_list[0]);
                     let answer = Password::new()
                         .with_prompt(format!("Enter answer {}", 1))
@@ -109,13 +107,12 @@ impl Display {
 
         // Get the seed and convert to keys
         let pub_key = unlocked.get_sign_pub_key();
-
         // Convert public key to AgentPubKeyB64
         let public_key = AgentPubKey::from_raw_32(pub_key.as_slice().to_vec());
         let public_key_b64 = AgentPubKeyB64::from(public_key);
 
         println!("\nPublic Key (raw): {}", hex::encode(pub_key.as_slice()));
-        println!("Public Key (AgentPubKeyB64): {}", public_key_b64);
+        println!("Holochain Public Key (AgentPubKeyB64): {}", public_key_b64);
 
         Ok(())
     }
