@@ -5,6 +5,7 @@ mod commands;
 mod error;
 
 use commands::create::Create;
+use commands::display::Display;
 use error::CliError;
 
 #[derive(Parser)]
@@ -18,6 +19,8 @@ struct Cli {
 enum Commands {
     /// Create a new seed bundle
     Create(Create),
+    /// Display the contents of a seed bundle
+    Display(Display),
 }
 
 #[tokio::main]
@@ -25,9 +28,10 @@ async fn main() -> Result<(), CliError> {
     color_eyre::install()?;
 
     let cli = Cli::parse();
-    
+
     match cli.command {
         Commands::Create(cmd) => cmd.execute().await?,
+        Commands::Display(cmd) => cmd.execute().await?,
     }
 
     Ok(())

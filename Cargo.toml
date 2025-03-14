@@ -10,10 +10,12 @@ path = "src/main.rs"
 [dependencies]
 clap = { version = "4.4", features = ["derive"] }
 color-eyre = "0.6"
+dialoguer = "0.11.0"
 thiserror = "2.0.12"
 tokio = { version = "1.0", features = ["full"] }
 base64 = "0.22.1"
 # Update when hc_seed_bundle is published
 # hc_seed_bundle = { version = "0.2.5" }
 hc_seed_bundle = { path = "./crates/hc_seed_bundle" }
-
+hex = "0.4.3"
+holochain_types = "0.4.2"
